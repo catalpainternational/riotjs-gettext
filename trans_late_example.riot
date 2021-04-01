@@ -1,0 +1,552 @@
+<trans-late-example>
+    <h1>Translation Examples</h1>
+
+    <p>A simple translation needs only a catalog and a msgid</p>
+
+
+<code>
+&lt;trans-late catalog="\{ \{'Activity': 'လုပ်ငန်း'} }" msgid="Activity"/&gt;
+</code>
+
+
+    <table class="table condensed bordered">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>English</th>
+                <th>Tetun</th>
+                <th>Myanmar</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    Activity
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" msgid="Activity"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" msgid="Activity"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.my }" msgid="Activity"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Project
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" msgid="Project"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" msgid="Project"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.my }" msgid="Project"/>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <p>A translation can also use a context marker to distinguish between "may" (ie this is optional) and "May" (the month).
+        The catalog can be included as a prop when it's more than the most simple case
+    </p>
+
+
+<code>
+&lt;trans-late catalog="\{ state.cat.tet }" context="verb" msgid="may"/&gt;
+</code>
+
+
+    <table class="table condensed bordered">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>English</th>
+                <th>Tetun</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    May, when context is 'verb'
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" context="verb" msgid="may"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" context="verb" msgid="may"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    May, when context is 'month'
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" context="month" msgid="may"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" context="month" msgid="may"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Missing  translations</h2>
+    <p>Missing translations return the msgid - the original value. For instance there is no month of 'Elephant'. In all languages, it returns the original 'msgid' value.</p>
+
+<code>
+
+    &lt;trans-late catalog="\{ state.cat.tet }" context="month" msgid="Elephant"/&gt;
+</code>
+
+    <table class="table condensed bordered">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>English</th>
+                <th>Tetun</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    Elephant, when context is 'animal'
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" context="animal" msgid="Elephant"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" context="animal" msgid="Elephant"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Elephant, when context is 'month'
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.en }" context="month" msgid="Elephant"/>
+                </td>
+                <td>
+                    <trans-late catalog="{ state.cat.tet }" context="month" msgid="Elephant"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2> Plural Translations</h2>
+    <p>
+        A translation may also differ between msgid and plural forms. That uses the `ngettext` function.
+        The 'plural' is only going to be used if the count is greater than one and no translation is found for the singular.
+        In this example, the lookup in the dictionary is "There is one activity".
+    </p>
+<code>
+    &lt;trans-late
+        catalog='\{ state.cat.en }'
+        msgid="There is one activity",
+        plural="There are many activities",
+        count=3
+    /&gt;
+</code>
+
+    <table class="table condensed bordered">
+        <thead>
+            <tr>
+                <th>Phrase</th>
+                <th>Count</th>
+                <th>English</th>
+                <th>Tetun</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    There is one activity
+                </td>
+                <td>1</td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.en }'
+                        msgid="There is one activity",
+                        plural="There are many activities",
+                        count=1
+                    ></trans-late>
+                </td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.tet }'
+                        msgid="There is one activity",
+                        plural="There are many activities",
+                        count=1
+                    ></trans-late>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    There is one activity
+                </td>
+                <td>3</td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.en }'
+                        msgid="There is one activity",
+                        plural="There are many activities",
+                        count=3
+                    ></trans-late>
+                </td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.tet }'
+                        msgid="There is one activity",
+                        plural="There are many activities",
+                        count=3
+                    ></trans-late>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+
+            <p>We can also use context along with the "plural" forms to contextualize plural forms.</p>
+
+            <pre>
+catalog = \{
+    ...
+    'foo\x04There is one activity': ['Iha foo ida', 'Iha foo barak'],
+    'bar\x04There is one activity': ['Iha bar ida', 'Iha bar barak'],
+    ...
+}
+            </pre>
+
+            <table class="table condensed bordered">
+                <thead>
+                    <tr>
+                        <th>Phrase</th>
+                        <th>Count</th>
+                        <th>Context</th>
+                        <th>English</th>
+                        <th>Tetun</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            There is one activity
+                        </td>
+                        <td>1</td>
+                        <td>foo</td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.en }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="foo"
+                                count=1
+                            ></trans-late>
+                        </td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.tet }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="foo"
+                                count=1
+                            ></trans-late>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            There is one activity
+                        </td>
+                        <td>1</td>
+                        <td>foo</td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.en }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="foo"
+                                count=3
+                            ></trans-late>
+                        </td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.tet }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="foo"
+                                count=3
+                            ></trans-late>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            There is one activity
+                        </td>
+                        <td>3</td>
+                        <td>bar</td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.en }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="bar"
+                                count=1
+                            ></trans-late>
+                        </td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.tet }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="bar"
+                                count=1
+                            ></trans-late>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            There is one activity
+                        </td>
+                        <td>3</td>
+                        <td>bar</td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.en }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="bar"
+                                count=3
+                            ></trans-late>
+                        </td>
+                        <td>
+                            <trans-late
+                                catalog='{ state.cat.tet }'
+                                msgid="There is one activity"
+                                plural="There are many activities"
+                                context="bar"
+                                count=3
+                            ></trans-late>
+                        </td>
+                    </tr>
+
+        </tbody>
+    </table>
+
+    <h2>Interpolations</h2>
+    <p>There are also two ways to include parameters in your string, broadly speaking, the same as we have in Python translations.</p>
+
+    <h3>Object Interpolation</h3>
+    <p>Here is an example combining string interpolation and plural forms.</p>
+    <p>For Tetum the dict entry</p>
+<pre>
+    catalog['There is %(total)s object. Remaining: %(count)s'] = ['Iha %(total)s objetu. Restu mak: %(count)s', 'Iha %(total)s objetu sira. Restu mak: %(count)s']
+</pre>
+
+    <table class="table condensed bordered">
+        <thead>
+            <tr>
+                <th>Phrase</th>
+                <th>Count</th>
+                <th>English</th>
+                <th>Tetun</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    There is %(total)s object. Remaining: %(count)s
+                </td>
+                <td>1</td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.en }'
+                        msgid="There is %(total)s object. Remaining: %(count)s"
+                        plural="?"
+                        count=1
+                        interpolate_named='{ { total: 1, count: 3 } }'
+                    ></trans-late>
+                </td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.tet }'
+                        msgid="There is %(total)s object. Remaining: %(count)s"
+                        plural="?"
+                        count=1
+                        interpolate_named='{ { total: 1, count: 3 } }'
+                    ></trans-late>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    There is %(total)s object. Remaining: %(count)s
+                </td>
+                <td>3</td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.en }'
+                        msgid="There is %(total)s object. Remaining: %(count)s"
+                        plural="?"
+                        count = 3
+                        interpolate_named='{ { total: 3, count: 3 } }'
+                    ></trans-late>
+                </td>
+                <td>
+                    <trans-late
+                        catalog='{ state.cat.tet }'
+                        msgid="There is %(total)s object. Remaining: %(count)s"
+                        plural="?"
+                        count=3
+                        interpolate_named='{ { total: 1, count: 3 } }'
+                    ></trans-late>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+
+        <h3>Array Interpolation</h3>
+        <p>Here is an example combining string interpolation and plural forms.</p>
+        <p>For Tetum the dict entry</p>
+    <pre>
+catalog['I caught %s pocket monster!. Remaining: %s'] = [
+    "Hau kaer %s pokemon deit!. Sei livre: %s",
+    "Hau kaer %s pokemon! Sei livre: %s"
+]</pre>
+    <p>And the props passed to the highlighted td (note that 'plural' is unused since the sing. string is in the catalog):</p>
+    <code>
+        &lt;trans-late
+        catalog='\{ state.cat.tet }'
+        msgid="I caught %s pocket monster!. Remaining: %s"
+        plural="..."
+        count=3
+        interpolate='\{ [3, 150-3] }'
+        /&gt;
+
+</code>
+
+        <table class="table condensed bordered">
+            <thead>
+                <tr>
+                    <th>Phrase</th>
+                    <th>Count</th>
+                    <th>English</th>
+                    <th>Tetun</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        I caught %s pocket monster!. Remaining: %s
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <trans-late
+                            catalog='{ state.cat.en }'
+                            msgid="I caught %s pocket monster!. Remaining: %s"
+                            plural="?"
+                            count=1
+                            interpolate='{ [150, 150-1] }'
+                        ></trans-late>
+                    </td>
+                    <td>
+                        <trans-late
+                            catalog='{ state.cat.tet }'
+                            msgid="I caught %s pocket monster!. Remaining: %s"
+                            plural="?"
+                            count=1
+                            interpolate='{ [1, 150-1] }'
+                        ></trans-late>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        "I caught %s pocket monster!. Remaining: %s"
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <trans-late
+                            catalog='{ state.cat.en }'
+                            msgid="I caught %s pocket monster!. Remaining: %s"
+                            plural="?"
+                            count = 3
+                            interpolate='{ [3, 150-3] }'
+                        ></trans-late>
+                    </td>
+                    <td style="background-color: lightyellow;">
+                        <trans-late
+                            catalog='{ state.cat.tet }'
+                            msgid="I caught %s pocket monster!. Remaining: %s"
+                            plural="?"
+                            count=3
+                            interpolate='{ [3, 150-3] }'
+                        ></trans-late>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+
+    <script>
+        import TransLate from "Openly/tags/trans_late.riot";
+        const en = {
+            'Activity': 'Activity',
+            'Project': 'Project',
+            'verb\x04may': 'may',
+            'month\x04may': 'may',
+            'There is one activity': ['There is one activity', 'There are many activities'],
+            'foo\x04There is one activity': ['There is one foo', 'There are many foos'],
+            'bar\x04There is one activity': ['There is one bar', 'There are many bars'],
+            'There is %(total)s object. Remaining: %(count)s': ['There is %(total)s object. Remaining: %(count)s', 'There are %(total)s objects. Remaining: %(count)s'],
+            'I caught %s pocket monster!. Remaining: %s': ["I caught only %s pocket monster!. Remaining: %s", "I caught %s pocket monsters!. Remaining: %s"]
+
+        }
+        const tet = {
+            'Activity': 'Actividade',
+            'Project': 'Projetu',
+            'verb\x04may': 'bele',
+            'month\x04may': 'maiu',
+            'animal\x04Elephant': 'Amimal abu-abu neebe boot',
+            'There is one activity': ['Iha atividade ida', 'Iha atividade barak'],
+            'foo\x04There is one activity': ['Iha foo ida', 'Iha foo barak'],
+            'bar\x04There is one activity': ['Iha bar ida', 'Iha bar barak'],
+            'There is %(total)s object. Remaining: %(count)s': ['Iha %(total)s objetu. Restu mak: %(count)s', 'Iha %(total)s objetu sira. Restu mak: %(count)s'],
+            'I caught %s pocket monster!. Remaining: %s': ["Hau kaer %s pokemon deit!. Sei livre: %s", "Hau kaer %s pokemon! Sei livre: %s"]
+        }
+        const my = {
+            'Activity': 'လုပ်ငန်း'
+        }
+        export default {
+            components: {
+                TransLate
+            },
+            onBeforeMount(props, state) {
+                state.cat = {
+                    en,
+                    tet,
+                    my
+                }
+            }
+        }
+
+    </script>
+
+</trans-late-example>
