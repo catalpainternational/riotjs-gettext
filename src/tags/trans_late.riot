@@ -1,4 +1,4 @@
-<trans-late>
+<trans-late class='{ state.no_translation ? "missing" : "" }'>
     { state.message }
     <script>
         const csep = '\x04'; // The separator between "context" marker and "text" value, as per Django
@@ -96,9 +96,19 @@
 
         export default {
             onBeforeMount(props, state) {
+                const value = props.catalog[props.msgid];
+                if (is_undef(value) || value == ""){
+                    state.no_translation = true;
+                    // Optionally, pass the missing string up to parent
+                    // to let translators know that we need some work done
+                    if (props.missingTranslation){
+                        props.missingTranslation(props.msgid);
+                    }
+                };
                 state.message = translate(
                     props.catalog, props.context, props.msgid, props.plural, props.count, props.interpolate, props.interpolate_named
                 );
+                console.log(state.message, props);
             }
         }
     </script>
