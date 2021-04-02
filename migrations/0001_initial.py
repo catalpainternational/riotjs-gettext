@@ -8,27 +8,72 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='TranslationSource',
+            name="TranslationSource",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('msgid', models.CharField(help_text='The message text to translate from', max_length=512)),
-                ('comment_for_translators', models.CharField(blank=True, max_length=2000, null=True)),
-                ('context', models.CharField(blank=True, help_text='Optional context marker for the message', max_length=512, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "msgid",
+                    models.CharField(
+                        help_text="The message text to translate from", max_length=512
+                    ),
+                ),
+                (
+                    "comment_for_translators",
+                    models.CharField(blank=True, max_length=2000, null=True),
+                ),
+                (
+                    "context",
+                    models.CharField(
+                        blank=True,
+                        help_text="Optional context marker for the message",
+                        max_length=512,
+                        null=True,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TranslatedMessage',
+            name="TranslatedMessage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('msgstr', models.CharField(max_length=512)),
-                ('msgstr_plurality', models.IntegerField(blank=True, default=0, help_text='Which plural form this translation refers to, 0 is singular, 1 is more than one (en). Other languages may have more forms.', null=True)),
-                ('language', models.CharField(max_length=5)),
-                ('msg', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gettext_utils.translationsource')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("msgstr", models.CharField(max_length=512)),
+                (
+                    "msgstr_plurality",
+                    models.IntegerField(
+                        blank=True,
+                        default=0,
+                        help_text="Which plural form this translation refers to, 0 is singular, 1 is more than one (en). Other languages may have more forms.",
+                        null=True,
+                    ),
+                ),
+                ("language", models.CharField(max_length=5)),
+                (
+                    "msg",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="gettext_utils.translationsource",
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,1 +1,4 @@
 polib
+pre-commit
+flake8
+black

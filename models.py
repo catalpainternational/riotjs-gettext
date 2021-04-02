@@ -1,27 +1,34 @@
-
 from typing import Dict, Union, List
 from django.db import models
-from django.contrib.postgres.aggregates import ArrayAgg
 from django.contrib.postgres.fields import ArrayField
-from django.db.models.functions import Concat
-from django.db.models.expressions import Case, F, Value, When
 import polib
 
 
 Catalog = Dict[str, Union[str, List[str]]]
-class TranslatableQuerySet(models.QuerySet):
 
-    def catalog_as_dict(self, language='en'):
+
+class TranslatableQuerySet(models.QuerySet):
+    def catalog_as_dict(self, language="en"):
         cat = {}
-        for entry in self.filter(translatedmessage__language = language).select_related('msg').objects.all():
-            k = F'{entry.msg.msg__msgctxt}\x04{entry.msg.msgid}' if entry.msg.msg__msgctxt else F'{entry.msg.msgid}'
+        for entry in (
+            self.filter(translatedmessage__language=language)
+            .select_related("msg")
+            .objects.all()
+        ):
+            k = (
+                f"{entry.msg.msg__msgctxt}\x04{entry.msg.msgid}"
+                if entry.msg.msg__msgctxt
+                else f"{entry.msg.msgid}"
+            )
             v = entry.msgstr__plural if entry.msgstr__plural else entry.msgstr
             cat[k] = v
         return cat
 
-    def catalog_as_po(self, language='en'):
+    def catalog_as_po(self, language="en"):
         po = polib.POFile()
-        for entry in self.filter(translatedmessage__language = language).select_related('msg'):
+        for entry in self.filter(translatedmessage__language=language).select_related(
+            "msg"
+        ):
             po.append(entry.to_po_entry)
         return self.__unicode__()
 
@@ -30,16 +37,39 @@ class Translatable(models.Model):
     """
     A "Translatable" string.
     """
-    msgid = models.CharField(max_length=512, help_text="The message text to translate from")
-    msgid_plural = ArrayField(models.CharField(max_length=512, help_text="The message text to translate for a plural case"))
-    msgctxt = models.CharField(max_length=512, help_text="Optional context marker for the message", null=True, blank=True)
+
+    msgid = models.CharField(
+        max_length=512, help_text="The message text to translate from"
+    )
+    msgid_plural = ArrayField(
+        models.CharField(
+            max_length=512, help_text="The message text to translate for a plural case"
+        )
+    )
+    msgctxt = models.CharField(
+        max_length=512,
+        help_text="Optional context marker for the message",
+        null=True,
+        blank=True,
+    )
 
     # Comments can be added to assist translators.
     # Some comments are automatically added by gettext utilities.
-    comment = models.CharField(max_length=512, blank=True, null=True, help_text="Extracted comments")
-    tcomment = models.CharField(max_length=512, blank=True, null=True, help_text="Translator comments")
+    comment = models.CharField(
+        max_length=512, blank=True, null=True, help_text="Extracted comments"
+    )
+    tcomment = models.CharField(
+        max_length=512, blank=True, null=True, help_text="Translator comments"
+    )
 
-    occurences = ArrayField(models.CharField(max_length=512, blank=True, null=True, help_text="Describe where this occurs"))
+    occurences = ArrayField(
+        models.CharField(
+            max_length=512,
+            blank=True,
+            null=True,
+            help_text="Describe where this occurs",
+        )
+    )
     flags = ArrayField(models.CharField(max_length=128))
 
     # If a string is marked as "fuzzy" these can help to determine
@@ -60,8 +90,11 @@ class Translated(models.Model):
     """
     Relates a translation in a given language to a translatable string
     """
-    msg = models.ForeignKey(Translatable, on_delete = models.CASCADE)
-    msgstr = models.CharField(max_length=512, help_text="The translation of the entry message string")
+
+    msg = models.ForeignKey(Translatable, on_delete=models.CASCADE)
+    msgstr = models.CharField(
+        max_length=512, help_text="The translation of the entry message string"
+    )
     msgstr_plural = ArrayField(models.CharField(max_length=512))
     obsolete = models.BooleanField(null=True, blank=True)
     language = models.CharField(max_length=5)
@@ -84,15 +117,10 @@ class Translated(models.Model):
         valid_entries = [e for e in po if not e.obsolete]
         for entry in valid_entries:
             print(entry.msgid, entry.msgstr)
-            ts = TranslationSource.objects.get_or_create(
-                msgid = entry.msgid,
-                context = entry.msgctxt
+            ts = Translatable.objects.get_or_create(
+                msgid=entry.msgid, context=entry.msgctxt
             )[0]
-            cls.objects.get_or_create(
-                msg=ts,
-                msgstr=entry.msgstr,
-                language=lc
-            )
+            cls.objects.get_or_create(msg=ts, msgstr=entry.msgstr, language=lc)
 
     def to_po_entry(self):
         return polib.POEntry(
