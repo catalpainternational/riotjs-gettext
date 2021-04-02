@@ -1,8 +1,8 @@
-from typing import Dict, Union, List
-from django.db import models
-from django.contrib.postgres.fields import ArrayField
-import polib
+from typing import Dict, List, Union
 
+import polib
+from django.contrib.postgres.fields import ArrayField
+from django.db import models
 
 Catalog = Dict[str, Union[str, List[str]]]
 
@@ -10,25 +10,26 @@ Catalog = Dict[str, Union[str, List[str]]]
 class TranslatableQuerySet(models.QuerySet):
     def catalog_as_dict(self, language="en"):
         cat = {}
-        for entry in (
-            self.filter(translatedmessage__language=language)
-            .select_related("msg")
-            .objects.all()
+        for entry in self.filter(translated__language=language).values(
+            "msgctxt", "msgid", "translated__msgstr", "translated__msgstr_plural"
         ):
             k = (
-                f"{entry.msg.msg__msgctxt}\x04{entry.msg.msgid}"
-                if entry.msg.msg__msgctxt
-                else f"{entry.msg.msgid}"
+                f"{entry['msgctxt']}\x04{entry['msgid']}"
+                if entry["msgctxt"]
+                else f"{entry['msgid']}"
             )
-            v = entry.msgstr__plural if entry.msgstr__plural else entry.msgstr
-            cat[k] = v
+            v = (
+                entry["translated__msgstr_plural"]
+                if entry["translated__msgstr_plural"]
+                else entry["translated__msgstr"]
+            )
+            if v:
+                cat[k] = v
         return cat
 
     def catalog_as_po(self, language="en"):
         po = polib.POFile()
-        for entry in self.filter(translatedmessage__language=language).select_related(
-            "msg"
-        ):
+        for entry in self.filter(translated__language=language).select_related("msg"):
             po.append(entry.to_po_entry)
         return self.__unicode__()
 
@@ -44,7 +45,9 @@ class Translatable(models.Model):
     msgid_plural = ArrayField(
         models.CharField(
             max_length=512, help_text="The message text to translate for a plural case"
-        )
+        ),
+        null=True,
+        blank=True,
     )
     msgctxt = models.CharField(
         max_length=512,
@@ -68,9 +71,15 @@ class Translatable(models.Model):
             blank=True,
             null=True,
             help_text="Describe where this occurs",
-        )
+        ),
+        blank=True,
+        null=True,
     )
-    flags = ArrayField(models.CharField(max_length=128))
+    flags = ArrayField(
+        models.CharField(max_length=128),
+        blank=True,
+        null=True,
+    )
 
     # If a string is marked as "fuzzy" these can help to determine
     # the original translation
@@ -95,7 +104,7 @@ class Translated(models.Model):
     msgstr = models.CharField(
         max_length=512, help_text="The translation of the entry message string"
     )
-    msgstr_plural = ArrayField(models.CharField(max_length=512))
+    msgstr_plural = ArrayField(models.CharField(max_length=512), null=True, blank=True)
     obsolete = models.BooleanField(null=True, blank=True)
     language = models.CharField(max_length=5)
 
@@ -118,7 +127,7 @@ class Translated(models.Model):
         for entry in valid_entries:
             print(entry.msgid, entry.msgstr)
             ts = Translatable.objects.get_or_create(
-                msgid=entry.msgid, context=entry.msgctxt
+                msgid=entry.msgid, msgctxt=entry.msgctxt
             )[0]
             cls.objects.get_or_create(msg=ts, msgstr=entry.msgstr, language=lc)
 

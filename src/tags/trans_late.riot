@@ -96,7 +96,7 @@
 
         export default {
             onBeforeMount(props, state) {
-                const value = props.catalog[props.msgid];
+                const value = props.catalog[props.context ? contextualize(props.context, props.msgid) : props.msgid];
                 if (is_undef(value) || value == ""){
                     state.no_translation = true;
                     // Optionally, pass the missing string up to parent

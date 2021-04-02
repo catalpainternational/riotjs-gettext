@@ -1,19 +1,39 @@
 from django.contrib import admin
-from . import models
+
+from .models import Translatable, Translated
 
 # Register your models here.
 
 
-class TranslatedMessageInline(admin.TabularInline):
-    model = models.TranslatedMessage
+class TranslatedInline(admin.TabularInline):
+    model = Translated
 
 
-@admin.register(models.TranslationSource)
-class TranslationSourceAdmin(admin.ModelAdmin):
-    list_display = ["context", "msgid", "comment_for_translators"]
-    inlines = [TranslatedMessageInline]
+@admin.register(Translatable)
+class TranslatableAdmin(admin.ModelAdmin):
+    list_display = [
+        "msgid",
+        "msgid_plural",
+        "msgctxt",
+        "comment",
+        "tcomment",
+        "occurences",
+        "flags",
+        "previous_msgctxt",
+        "previous_msgid",
+        "previous_msgid_plural",
+        "linenum",
+    ]
+
+    inlines = [TranslatedInline]
 
 
-@admin.register(models.TranslatedMessage)
-class TranslatedMessageAdmin(admin.ModelAdmin):
-    list_display = ["msg", "msgstr", "msgstr_plurality", "language"]
+@admin.register(Translated)
+class TranslatedAdmin(admin.ModelAdmin):
+    list_display = [
+        "msg",
+        "msgstr",
+        "msgstr_plural",
+        "obsolete",
+        "language",
+    ]

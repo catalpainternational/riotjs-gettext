@@ -1,8 +1,8 @@
 from django.utils.translation import (
     gettext_lazy,
     ngettext_lazy,
-    pgettext_lazy,
     npgettext_lazy,
+    pgettext_lazy,
 )  # noqa
 
 gettext_lazy("""Activity""")
