@@ -14,7 +14,6 @@ class TranslationSource(models.Model):
     """
     A "Translated" string may include
     """
-    parent = models.ForeignKey("self", on_delete = models.CASCADE)
     msgid = models.CharField(max_length=512, help_text="The message text to translate from", unique=True)
     msgid_plural = models.CharField(max_length=512, help_text="Optional plural form of the message")
     comment_for_translators = models.CharField(max_length=2000)
