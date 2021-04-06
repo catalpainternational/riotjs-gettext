@@ -1,1 +1,10 @@
+# Yarn 2 - https://yarnpkg.com/advanced/qa#which-files-should-be-gitignored
+.yarn/*
+.yarn/install-state.gz
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versionss
+
 __pycache__
