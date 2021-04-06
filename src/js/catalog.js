@@ -107,7 +107,7 @@ export default class Catalog {
         let message;
 
         /* Broadly speaking, go from 'most complex' to 'least complex' case */
-        if (context && msgid && plural && count) { message = npgettext(catalog, context, msgid, plural, parseInt(count)) }
+        if (context && msgid && !is_undef(plural) && count) { message = npgettext(catalog, context, msgid, plural, parseInt(count)) }
         else if (msgid && plural && count) { message = ngettext(catalog, msgid, plural, parseInt(count)) }
         else if (msgid && context) { message = pgettext(catalog, context, msgid) }
         else if (msgid) { message = gettext(catalog, msgid) }
@@ -117,6 +117,12 @@ export default class Catalog {
         else if (interpolate) { message = do_interpolate(message, interpolate) }
         return message;
     };
+
+    translate_opts(opts) {
+        /*Parameterized version of translate */
+        return translate (opts.context, opts.msgid, opts.plural, opts.count, opts.interpolate, opts.interpolate_named)
+    }
+
     has(context, msgid) {
         return !is_undef(this.content[context ? contextualize(context, msgid) : msgid]);
     }
