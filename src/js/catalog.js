@@ -149,4 +149,9 @@ export default class Catalog {
   interpolate(fmt, obj, named) {
     return named ? do_named_interpolate(fmt, obj) : do_interpolate(fmt, obj);
   }
+
+  has(context, msgid) {
+    return !is_undef(this.content[context ? contextualize(context, msgid) : msgid]);
+  }
+
 }

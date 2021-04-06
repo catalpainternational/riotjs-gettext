@@ -1,13 +1,23 @@
 <trans-late-example>
     <h1>Translation Examples</h1>
 
-    <p>A simple translation needs only a catalog and a msgid</p>
-
+    <p>A simple translation needs only a catalog and a msgid. Instantiate a catalog instance first</p>
 
 <code>
-&lt;trans-late catalog="\{ \{'Activity': 'လုပ်ငန်း'} }" msgid="Activity"/&gt;
+    state.catalog = new Catalog(\{'Activity': 'လုပ်ငန်း'}
 </code>
 
+<p> Use the catalog instance in the tag</p>
+
+<code>
+&lt;trans-late catalog="\{ state.catalog }" msgid="Activity"/&gt;
+</code>
+
+<p>Alternatively, translate text outside the context of the Riot tag using the gettext functions of the catalog directly </p>
+
+<code>
+\{ state.catalog.gettext("Project") }
+</code>
 
     <table class="table condensed bordered">
         <thead>
@@ -31,7 +41,7 @@
                     <trans-late catalog="{ state.cat.tet }" msgid="Activity"/>
                 </td>
                 <td>
-                    <trans-late catalog="{ state.cat.my }" msgid="Activity"/>
+                    <trans-late catalog="{ state.cat.my  }" msgid="Activity"/>
                 </td>
             </tr>
 
