@@ -108,7 +108,7 @@ export default class Catalog {
 
         /* Broadly speaking, go from 'most complex' to 'least complex' case */
         if (context && msgid && !is_undef(plural) && count) { message = npgettext(catalog, context, msgid, plural, parseInt(count)) }
-        else if (msgid && plural && count) { message = ngettext(catalog, msgid, plural, parseInt(count)) }
+        else if (msgid && !is_undef(plural) && count) { message = ngettext(catalog, msgid, plural, parseInt(count)) }
         else if (msgid && context) { message = pgettext(catalog, context, msgid) }
         else if (msgid) { message = gettext(catalog, msgid) }
 
