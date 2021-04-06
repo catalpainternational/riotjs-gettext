@@ -45,4 +45,51 @@ const tet = new Catalog({
 })
 ```
 
-The catalog class above exposes a public method, "translate". This takes a number of parameters in order of approximately most important to least important.
+The catalog class above exposes a public method, "translate". This takes a number of parameters in order of approximately most important to least important. It also has public methods with the same sig as Django's implemetation for five additional functions:
+
+ - gettext
+ - ngettext
+ - pgettext
+ - npgettext
+ - interpolate
+
+### Use As A Riot Module
+
+The simplest example of a complete Riot tag is as follows:
+```html
+<parent-tag>
+    <trans-late catalog="{ state.catalog }" msgid="Project"/>
+    <script>
+        import TransLate from "Gettext/tags/trans_late.riot";
+        import Catalog from "Gettext/js/catalog";
+
+        export default {
+            components: {
+                TransLate
+            },
+            onBeforeMount(props, state) {
+                state.catalog = new Catalog({
+                    'Project': 'Projetu',
+                })
+            }
+        }
+
+    </script>
+</parent-tag>
+```
+
+Note that the equivalent could be achieved using the Catalog class only:
+
+```html
+<parent-tag>
+    { state.catalog.gettext("Project") }
+    <script>
+        import TransLate from "Gettext/tags/trans_late.riot";
+        import Catalog from "Gettext/js/catalog";
+        const tet = new Catalog({
+            'Project': 'Projetu',
+        })
+    </script>
+</parent-tag>
+```
+This method allows to replace text in othet situations, such as within tag attributes.
