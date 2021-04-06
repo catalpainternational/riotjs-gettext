@@ -507,7 +507,8 @@ catalog['I caught %s pocket monster!. Remaining: %s'] = [
 
     <script>
         import TransLate from "Gettext/tags/trans_late.riot";
-        const en = {
+        import Catalog from "Gettext/js/catalog";
+        const en = new Catalog({
             'Activity': 'Activity',
             'Project': 'Project',
             'verb\x04may': 'may',
@@ -518,8 +519,8 @@ catalog['I caught %s pocket monster!. Remaining: %s'] = [
             'There is %(total)s object. Remaining: %(count)s': ['There is %(total)s object. Remaining: %(count)s', 'There are %(total)s objects. Remaining: %(count)s'],
             'I caught %s pocket monster!. Remaining: %s': ["I caught only %s pocket monster!. Remaining: %s", "I caught %s pocket monsters!. Remaining: %s"]
 
-        }
-        const tet = {
+        });
+        const tet = new Catalog({
             'Activity': 'Actividade',
             'Project': 'Projetu',
             'verb\x04may': 'bele',
@@ -530,10 +531,17 @@ catalog['I caught %s pocket monster!. Remaining: %s'] = [
             'bar\x04There is one activity': ['Iha bar ida', 'Iha bar barak'],
             'There is %(total)s object. Remaining: %(count)s': ['Iha %(total)s objetu. Restu mak: %(count)s', 'Iha %(total)s objetu sira. Restu mak: %(count)s'],
             'I caught %s pocket monster!. Remaining: %s': ["Hau kaer %s pokemon deit!. Sei livre: %s", "Hau kaer %s pokemon! Sei livre: %s"]
-        }
-        const my = {
-            'Activity': 'လုပ်ငန်း'
-        }
+        })
+        const my = new Catalog({
+            'Activity': 'လုပ်ငန်း',
+        }, 'translaterator');
+
+        /* Trigger a few random string collections */
+
+        my.collect('animal', 'Elephant', 'Elephants')
+        my.collect('month', 'May')
+        my.collect('month', 'June')
+
         export default {
             components: {
                 TransLate
