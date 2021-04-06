@@ -1,0 +1,37 @@
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  & div {
+    display: inline-block;
+    position: absolute;
+    left: 10%;
+    width: 20%;
+    background: #acb4c7;
+    border: 1px solid #acb4c7;
+    animation: lds-roller 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    &:nth-child(1) {
+      left: 10%;
+      animation-delay: -0.24s;
+    }
+    &:nth-child(2) {
+      left: 40%;
+      animation-delay: -0.12s;
+    }
+    &:nth-child(3) {
+      left: 70%;
+      animation-delay: 0;
+    }
+  }
+}
+@keyframes lds-roller {
+  0% {
+    top: 10%;
+    height: 80%;
+  }
+  50%, 100% {
+    top: 30%;
+    height: 40%;
+  }
+}
