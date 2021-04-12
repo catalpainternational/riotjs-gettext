@@ -1,0 +1,140 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-12 09:38+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Activity"
+msgstr ""
+
+msgid "Collaboration Type"
+msgstr ""
+
+msgid "Project"
+msgstr ""
+
+msgid "Sector"
+msgstr ""
+
+msgid "{ tab[1].label }"
+msgstr ""
+
+#, python-format
+msgid "I caught %s pocket monster!. Remaining: %s"
+msgid_plural "?"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "There is %(total)s object. Remaining: %(count)s"
+msgid_plural "?"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "There is one activity"
+msgid_plural "There are many activities"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "bar"
+msgid "There is one activity"
+msgid_plural "There are many activities"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "foo"
+msgid "There is one activity"
+msgid_plural "There are many activities"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "animal"
+msgid "Elephant"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%(project_or_activity)s Description"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%(project_or_activity)s Objectives"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%(project_or_activity)s Status"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%(project_or_activity)s Target Groups"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%(project_or_activity)s Title"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "%s Partner ID"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "A detailed description of the %(project_or_activity)s objectives and its expected outcomes."
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "Details of groups that are intended to benefit from the %(project_or_activity)s."
+msgstr ""
+
+msgctxt "editor"
+msgid "Expected Finish Date"
+msgstr ""
+
+msgctxt "editor"
+msgid "Expected Start Date"
+msgstr ""
+
+msgctxt "editor"
+msgid "Save and Next"
+msgstr ""
+
+msgctxt "editor"
+msgid "Save"
+msgstr ""
+
+#, python-format
+msgctxt "editor"
+msgid "This explains what the %(project_or_activity)s is, it’s longer than the title and contains more detail."
+msgstr ""
+
+msgctxt "month"
+msgid "Elephant"
+msgstr ""
+
+msgctxt "month"
+msgid "may"
+msgstr ""
+
+msgctxt "verb"
+msgid "may"
+msgstr ""
