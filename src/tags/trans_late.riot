@@ -1,29 +1,38 @@
-<trans-late class='{ state.no_translation && ! state.loading ? "missing" : "" }'>
-    <lds-roller if='{ state.loading }'></lds-roller>
-    { state.message || '...'}
-    <script>
-        import LdsRoller from "./lds_roller.riot";
-        function asyncTranslate(catalog_, context, msgid, plural, count, interpolate, interpolate_named) {
-            return new Promise(resolve => {
-                setTimeout(function() {
-                    const message = catalog_.translate(context, msgid, plural, count, interpolate, interpolate_named)
-                    resolve(message)
-                    console.log(message)
-                }, 1000)
-            })
-        }
-        export default {
-            components: {LdsRoller},
-            onBeforeMount(props, state) {
+<trans-late>
+  { state.message || state.fallback }
+  <span class="small" if='{ state.messageState == "waitingResponse" }'
+    >...</span
+  >
 
-                state.no_translation = !props.catalog.has(props.context, props.msgid);
-                state.loading = true;
-                asyncTranslate(props.catalog, props.context, props.msgid, props.plural, props.count, props.interpolate, props.interpolate_named).then( (s) => {
-                    console.log(s);
-                    this.update({message:s, loading: false})
-                    }
-                )
-            }
-        }
-    </script>
+  <script>
+    export default {
+      onBeforeMount(props, state) {
+        props.catalog.subscribe(this.setMessage, props.msgid, props.context);
+      },
+      onBeforeUnmount(props, state) {
+        props.catalog.unsubscribe(this.setMessage, props.msgid, props.context);
+      },
+      onMounted(props, state) {
+        this.setMessage();
+      },
+      setMessage() {
+        const props = this.props;
+        const cat = props.catalog;
+        const interpolate =
+          typeof props.interpolate == "string"
+            ? props.interpolate.split(",")
+            : props.interpolate;
+        const message = cat.translate(
+          props.context,
+          props.msgid,
+          props.plural,
+          props.count,
+          interpolate,
+          props.interpolate_named
+        );
+        var messageState = cat.messageState(props.context, props.msgid);
+        this.update({ message: message, messageState: messageState });
+      },
+    };
+  </script>
 </trans-late>
