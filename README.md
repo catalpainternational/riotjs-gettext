@@ -93,3 +93,18 @@ Note that the equivalent could be achieved using the Catalog class only:
 </parent-tag>
 ```
 This method allows to replace text in othet situations, such as within tag attributes.
+
+
+# Setting Up Translations
+
+To write translations, this module currently uses an intermediate Python file listing the required translations
+
+Step 1: Write to python
+`./manage.py riot_py`
+Step 2: Makemessages for your locales
+`./manage.py makemessages gettext_utils --locale en`
+`./manage.py makemessages gettext_utils --locale my`
+
+(Repeat for the language codes relevant to your project)
+
+Step 3: Rosetta compile as per usual

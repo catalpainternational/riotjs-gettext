@@ -9,29 +9,30 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-12 09:38+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2021-04-12 09:58+0822\n"
+"Last-Translator: b'  <josh@catalpa.io>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Translated-Using: django-rosetta 0.9.4\n"
 
 msgid "Activity"
-msgstr ""
+msgstr "လုပ်ငန်း"
 
 msgid "Collaboration Type"
-msgstr ""
+msgstr "ပူးပေါင်းဆောင်ရွက်မှုပုံစံ"
 
 msgid "Project"
 msgstr ""
 
 msgid "Sector"
-msgstr ""
+msgstr "ကဏ္ဍ"
 
 msgid "{ tab[1].label }"
-msgstr ""
+msgstr "(no translation required)"
 
 #, python-format
 msgid "I caught %s pocket monster!. Remaining: %s"
@@ -69,7 +70,7 @@ msgstr ""
 #, python-format
 msgctxt "editor"
 msgid "%(project_or_activity)s Description"
-msgstr ""
+msgstr "%(project_or_activity)sအကြောင်းအရာဖော်ပြချက်"
 
 #, python-format
 msgctxt "editor"
@@ -89,7 +90,7 @@ msgstr ""
 #, python-format
 msgctxt "editor"
 msgid "%(project_or_activity)s Title"
-msgstr ""
+msgstr "%(project_or_activity)sခေါင်းစဉ်"
 
 #, python-format
 msgctxt "editor"
@@ -98,21 +99,25 @@ msgstr ""
 
 #, python-format
 msgctxt "editor"
-msgid "A detailed description of the %(project_or_activity)s objectives and its expected outcomes."
+msgid ""
+"A detailed description of the %(project_or_activity)s objectives and its "
+"expected outcomes."
 msgstr ""
 
 #, python-format
 msgctxt "editor"
-msgid "Details of groups that are intended to benefit from the %(project_or_activity)s."
+msgid ""
+"Details of groups that are intended to benefit from the "
+"%(project_or_activity)s."
 msgstr ""
 
 msgctxt "editor"
 msgid "Expected Finish Date"
-msgstr ""
+msgstr "အမှန်တကယ်စတင်သည့်ရက်စွဲ"
 
 msgctxt "editor"
 msgid "Expected Start Date"
-msgstr ""
+msgstr "စီမံကိန်းစတင်သည့်ရက်စွဲ"
 
 msgctxt "editor"
 msgid "Save and Next"
@@ -120,11 +125,13 @@ msgstr ""
 
 msgctxt "editor"
 msgid "Save"
-msgstr ""
+msgstr "သိမ်းထားပါ"
 
 #, python-format
 msgctxt "editor"
-msgid "This explains what the %(project_or_activity)s is, it’s longer than the title and contains more detail."
+msgid ""
+"This explains what the %(project_or_activity)s is, it’s longer than the "
+"title and contains more detail."
 msgstr ""
 
 msgctxt "month"
