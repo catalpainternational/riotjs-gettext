@@ -7,13 +7,18 @@
   <script>
     export default {
       onBeforeMount(props, state) {
-        props.catalog.subscribe(this.setMessage, props.msgid, props.context);
+        state.msgid = props.msgid || this.getContent(),
+        props.catalog.subscribe(this.setMessage, state.msgid, props.context);
+        console.log(state.msgid);
       },
       onBeforeUnmount(props, state) {
-        props.catalog.unsubscribe(this.setMessage, props.msgid, props.context);
+        props.catalog.unsubscribe(this.setMessage, state.msgid, props.context);
       },
       onMounted(props, state) {
         this.setMessage();
+      },
+      getContent(){
+        return this.slots && this.slots[0] ? this.slots[0].html.trimStart().trimEnd() : ''
       },
       setMessage() {
         const props = this.props;
@@ -24,13 +29,13 @@
             : props.interpolate;
         const message = cat.translate(
           props.context,
-          props.msgid,
+          this.state.msgid,
           props.plural,
           props.count,
           interpolate,
           props.interpolate_named
         );
-        var messageState = cat.messageState(props.context, props.msgid);
+        var messageState = cat.messageState(props.context, this.state.msgid);
         this.update({ message: message, messageState: messageState });
       },
     };

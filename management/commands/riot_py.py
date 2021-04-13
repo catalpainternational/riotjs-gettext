@@ -19,7 +19,7 @@ def get_riot_files():
         for riotfile in filter(
             lambda n: n.endswith(".riot") and n != "trans_late.riot", files
         ):
-            yield os.path.join(root, riotfile)
+            yield os.path.join(root, riotfile), riotfile
 
 
 def process_tag(tag):
@@ -30,7 +30,11 @@ def process_tag(tag):
 
     plural = tag.get("plural").replace('"', '"') if tag.get("plural") else None
     context = tag.get("context").replace('"', '"') if tag.get("context") else None
-    msgid = tag.get("msgid").replace('"', '"') if tag.get("msgid") else None
+    msgid = (
+        tag.get("msgid").replace('"', '"')
+        if tag.get("msgid")
+        else tag.get_text().strip()
+    )
     number = tag.get("number", 1) if tag.get("number") else None
     comment = "#" if "{" in msgid else ""
 
@@ -57,7 +61,7 @@ class Command(BaseCommand):
         postamble = "\n"
         with open(output, "w") as outfile:
             outfile.write(preamble)
-            for riot in get_riot_files():
+            for riot, filename in get_riot_files():
                 with open(riot) as fp:
                     # Scan the riot file for trans-late tags and anything which uses `is="trans-late"` syntax
                     soup = BeautifulSoup(fp, "html.parser")
@@ -82,7 +86,7 @@ class Command(BaseCommand):
                     if verbosity > 1:
                         for t in tags:
                             self.stdout.write(self.style.SUCCESS(f"{t}"))
-                    header = f"\n\n\t# {riot}\n\t"
+                    header = f"\n\n\t# {filename}\n\t"
                     tagstrings = "\n\t".join(tags)
                     # Indicate the file location
                     outfile.write(header)
