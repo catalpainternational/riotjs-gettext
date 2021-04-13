@@ -92,8 +92,20 @@ Note that the equivalent could be achieved using the Catalog class only:
     </script>
 </parent-tag>
 ```
+
 This method allows to replace text in othet situations, such as within tag attributes.
 
+## As an "is"
+
+Riot can also turn any "normal" html tag into a riot tag using "is". An example:
+```
+<h2 is="trans-late" catalog="{ state.catalog }" msgid="General">General</h2>
+```
+
+which is about equal to
+```
+<h2><trans-late catalog="{ state.catalog }" msgid="General"/>General</h2>
+```
 
 # Setting Up Translations
 
