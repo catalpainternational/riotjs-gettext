@@ -9,7 +9,6 @@
       onBeforeMount(props, state) {
         state.msgid = props.msgid || this.getContent(),
         props.catalog.subscribe(this.setMessage, state.msgid, props.context);
-        console.log(state.msgid);
       },
       onBeforeUnmount(props, state) {
         props.catalog.unsubscribe(this.setMessage, state.msgid, props.context);
