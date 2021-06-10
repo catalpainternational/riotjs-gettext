@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import catalogview
+from .views import CatalogView
 
 urlpatterns = [
-    path("translations", catalogview, name="gettext_utils_catalog"),
+    path('translations', CatalogView.as_view(), name="gettext_utils_catalog")
 ]
